@@ -179,6 +179,29 @@ app.use("/transfer", (req, res) => {
         })
 
     })
+app.use("/transaction", (req, res) => {
+    const sql_query = 'select * from  transaction_history'
+    connection.query(sql_query, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    })
+})
+   
+
+app.use("/get_transaction", (req, res) => {
+    console.log(req.url);
+    var toAcc = 101;
+    var queryData = url.parse(req.url, true).query;
+    console.log(queryData);
+    const sql_query = 'SELECT * FROM transaction_history WHERE toacc = ' + queryData.toAcc;
+    console.log('SELECT * FROM transaction_history WHERE toacc = ' + queryData.toAcc);
+    connection.query(sql_query, (err, result) => {
+        if (err) throw err;
+        console.log("")
+        res.send(result);
+
+    })
+})
 
 
 
